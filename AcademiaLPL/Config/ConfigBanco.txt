@@ -1,0 +1,1 @@
+Server=localhost;Port=3306;DataBase=AcademiaLPL;Uid=root;Pwd=kjhg456bta
