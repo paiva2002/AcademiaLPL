@@ -1,4 +1,7 @@
 ﻿using AcademiaLPL.Domain.Base;
+using AcademiaLPL.Domain.Entities;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace AcademiaLPL.Domain.Entities
 {

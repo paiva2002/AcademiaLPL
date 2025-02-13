@@ -4,7 +4,7 @@ using AcademiaLPL.Cadastros;
 using AcademiaLPL.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using ReaLTaiizor.Forms;
-using IFSPStore.App.Infra;
+using AcademiaLPL.Infra;
 
 namespace AcademiaLPL
 {

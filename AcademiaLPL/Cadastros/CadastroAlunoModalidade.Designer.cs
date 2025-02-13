@@ -32,20 +32,20 @@
             textAtivo = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             cboIdAluno = new ReaLTaiizor.Controls.MaterialComboBox();
             cboIdModalidade = new ReaLTaiizor.Controls.MaterialComboBox();
-            tabControlBase.SuspendLayout();
-            tabPage1.SuspendLayout();
+            //tabControlBase.SuspendLayout();
+            tabPageCadastro.SuspendLayout();
             SuspendLayout();
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(cboIdModalidade);
-            tabPage1.Controls.Add(cboIdAluno);
-            tabPage1.Controls.Add(textAtivo);
-            tabPage1.Controls.Add(textDataInicio);
-            tabPage1.Controls.SetChildIndex(textDataInicio, 0);
-            tabPage1.Controls.SetChildIndex(textAtivo, 0);
-            tabPage1.Controls.SetChildIndex(cboIdAluno, 0);
-            tabPage1.Controls.SetChildIndex(cboIdModalidade, 0);
+            tabPageCadastro.Controls.Add(cboIdModalidade);
+            tabPageCadastro.Controls.Add(cboIdAluno);
+            tabPageCadastro.Controls.Add(textAtivo);
+            tabPageCadastro.Controls.Add(textDataInicio);
+            tabPageCadastro.Controls.SetChildIndex(textDataInicio, 0);
+            tabPageCadastro.Controls.SetChildIndex(textAtivo, 0);
+            tabPageCadastro.Controls.SetChildIndex(cboIdAluno, 0);
+            tabPageCadastro.Controls.SetChildIndex(cboIdModalidade, 0);
             // 
             // textDataInicio
             // 
@@ -163,9 +163,9 @@
             Location = new Point(0, 0);
             Name = "CadastroAlunoModalidade";
             Text = "CadastroAlunoModalidade";
-            tabControlBase.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            //tabControlBase.ResumeLayout(false);
+            tabPageCadastro.ResumeLayout(false);
+            tabPageCadastro.PerformLayout();
             ResumeLayout(false);
         }
 

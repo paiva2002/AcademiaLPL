@@ -34,24 +34,24 @@
             textHoraFim = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             cboIdModalidade = new ReaLTaiizor.Controls.MaterialComboBox();
             cboIdProfessor = new ReaLTaiizor.Controls.MaterialComboBox();
-            tabControlBase.SuspendLayout();
-            tabPage1.SuspendLayout();
+            //tabControlBase.SuspendLayout();
+            tabPageCadastro.SuspendLayout();
             SuspendLayout();
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(cboIdProfessor);
-            tabPage1.Controls.Add(cboIdModalidade);
-            tabPage1.Controls.Add(textHoraFim);
-            tabPage1.Controls.Add(textHoraInicio);
-            tabPage1.Controls.Add(textDiaAula);
-            tabPage1.Controls.Add(textId);
-            tabPage1.Controls.SetChildIndex(textId, 0);
-            tabPage1.Controls.SetChildIndex(textDiaAula, 0);
-            tabPage1.Controls.SetChildIndex(textHoraInicio, 0);
-            tabPage1.Controls.SetChildIndex(textHoraFim, 0);
-            tabPage1.Controls.SetChildIndex(cboIdModalidade, 0);
-            tabPage1.Controls.SetChildIndex(cboIdProfessor, 0);
+            tabPageCadastro.Controls.Add(cboIdProfessor);
+            tabPageCadastro.Controls.Add(cboIdModalidade);
+            tabPageCadastro.Controls.Add(textHoraFim);
+            tabPageCadastro.Controls.Add(textHoraInicio);
+            tabPageCadastro.Controls.Add(textDiaAula);
+            tabPageCadastro.Controls.Add(textId);
+            tabPageCadastro.Controls.SetChildIndex(textId, 0);
+            tabPageCadastro.Controls.SetChildIndex(textDiaAula, 0);
+            tabPageCadastro.Controls.SetChildIndex(textHoraInicio, 0);
+            tabPageCadastro.Controls.SetChildIndex(textHoraFim, 0);
+            tabPageCadastro.Controls.SetChildIndex(cboIdModalidade, 0);
+            tabPageCadastro.Controls.SetChildIndex(cboIdProfessor, 0);
             // 
             // textId
             // 
@@ -231,9 +231,9 @@
             Location = new Point(0, 0);
             Name = "CadastroAula";
             Text = "CadastroAula";
-            tabControlBase.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            //tabControlBase.ResumeLayout(false);
+            tabPageCadastro.ResumeLayout(false);
+            tabPageCadastro.PerformLayout();
             ResumeLayout(false);
         }
 

@@ -31,30 +31,30 @@
             textId = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textNome = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textDataNascimento = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            textTelefeno = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            textTelefone = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textEmail = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textDataMatricula = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textAtivo = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            tabControlBase.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabControlCadastro.SuspendLayout();
+            tabPageCadastro.SuspendLayout();
             SuspendLayout();
             // 
-            // tabPage1
+            // tabPageCadastro
             // 
-            tabPage1.Controls.Add(textAtivo);
-            tabPage1.Controls.Add(textDataMatricula);
-            tabPage1.Controls.Add(textEmail);
-            tabPage1.Controls.Add(textTelefeno);
-            tabPage1.Controls.Add(textDataNascimento);
-            tabPage1.Controls.Add(textNome);
-            tabPage1.Controls.Add(textId);
-            tabPage1.Controls.SetChildIndex(textId, 0);
-            tabPage1.Controls.SetChildIndex(textNome, 0);
-            tabPage1.Controls.SetChildIndex(textDataNascimento, 0);
-            tabPage1.Controls.SetChildIndex(textTelefeno, 0);
-            tabPage1.Controls.SetChildIndex(textEmail, 0);
-            tabPage1.Controls.SetChildIndex(textDataMatricula, 0);
-            tabPage1.Controls.SetChildIndex(textAtivo, 0);
+            tabPageCadastro.Controls.Add(textAtivo);
+            tabPageCadastro.Controls.Add(textDataMatricula);
+            tabPageCadastro.Controls.Add(textEmail);
+            tabPageCadastro.Controls.Add(textTelefone);
+            tabPageCadastro.Controls.Add(textDataNascimento);
+            tabPageCadastro.Controls.Add(textNome);
+            tabPageCadastro.Controls.Add(textId);
+            tabPageCadastro.Controls.SetChildIndex(textId, 0);
+            tabPageCadastro.Controls.SetChildIndex(textNome, 0);
+            tabPageCadastro.Controls.SetChildIndex(textDataNascimento, 0);
+            tabPageCadastro.Controls.SetChildIndex(textTelefone, 0);
+            tabPageCadastro.Controls.SetChildIndex(textEmail, 0);
+            tabPageCadastro.Controls.SetChildIndex(textDataMatricula, 0);
+            tabPageCadastro.Controls.SetChildIndex(textAtivo, 0);
             // 
             // textId
             // 
@@ -149,36 +149,36 @@
             textDataNascimento.TrailingIcon = null;
             textDataNascimento.UseSystemPasswordChar = false;
             // 
-            // textTelefeno
+            // textTelefone
             // 
-            textTelefeno.AnimateReadOnly = false;
-            textTelefeno.AutoCompleteMode = AutoCompleteMode.None;
-            textTelefeno.AutoCompleteSource = AutoCompleteSource.None;
-            textTelefeno.BackgroundImageLayout = ImageLayout.None;
-            textTelefeno.CharacterCasing = CharacterCasing.Normal;
-            textTelefeno.Depth = 0;
-            textTelefeno.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            textTelefeno.HideSelection = true;
-            textTelefeno.Hint = "Telefone (DD) 00000-0000";
-            textTelefeno.LeadingIcon = null;
-            textTelefeno.Location = new Point(6, 168);
-            textTelefeno.MaxLength = 32767;
-            textTelefeno.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            textTelefeno.Name = "textTelefeno";
-            textTelefeno.PasswordChar = '\0';
-            textTelefeno.PrefixSuffixText = null;
-            textTelefeno.ReadOnly = false;
-            textTelefeno.RightToLeft = RightToLeft.No;
-            textTelefeno.SelectedText = "";
-            textTelefeno.SelectionLength = 0;
-            textTelefeno.SelectionStart = 0;
-            textTelefeno.ShortcutsEnabled = true;
-            textTelefeno.Size = new Size(380, 48);
-            textTelefeno.TabIndex = 5;
-            textTelefeno.TabStop = false;
-            textTelefeno.TextAlign = HorizontalAlignment.Left;
-            textTelefeno.TrailingIcon = null;
-            textTelefeno.UseSystemPasswordChar = false;
+            textTelefone.AnimateReadOnly = false;
+            textTelefone.AutoCompleteMode = AutoCompleteMode.None;
+            textTelefone.AutoCompleteSource = AutoCompleteSource.None;
+            textTelefone.BackgroundImageLayout = ImageLayout.None;
+            textTelefone.CharacterCasing = CharacterCasing.Normal;
+            textTelefone.Depth = 0;
+            textTelefone.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            textTelefone.HideSelection = true;
+            textTelefone.Hint = "Telefone (DD) 00000-0000";
+            textTelefone.LeadingIcon = null;
+            textTelefone.Location = new Point(6, 168);
+            textTelefone.MaxLength = 32767;
+            textTelefone.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            textTelefone.Name = "textTelefone";
+            textTelefone.PasswordChar = '\0';
+            textTelefone.PrefixSuffixText = null;
+            textTelefone.ReadOnly = false;
+            textTelefone.RightToLeft = RightToLeft.No;
+            textTelefone.SelectedText = "";
+            textTelefone.SelectionLength = 0;
+            textTelefone.SelectionStart = 0;
+            textTelefone.ShortcutsEnabled = true;
+            textTelefone.Size = new Size(380, 48);
+            textTelefone.TabIndex = 5;
+            textTelefone.TabStop = false;
+            textTelefone.TextAlign = HorizontalAlignment.Left;
+            textTelefone.TrailingIcon = null;
+            textTelefone.UseSystemPasswordChar = false;
             // 
             // textEmail
             // 
@@ -281,9 +281,9 @@
             Location = new Point(0, 0);
             Name = "CadastroAluno";
             Text = "CadastroAluno";
-            tabControlBase.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            tabControlCadastro.ResumeLayout(false);
+            tabPageCadastro.ResumeLayout(false);
+            tabPageCadastro.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -292,7 +292,7 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textAtivo;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textDataMatricula;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textEmail;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit textTelefeno;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit textTelefone;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textDataNascimento;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textNome;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit textId;

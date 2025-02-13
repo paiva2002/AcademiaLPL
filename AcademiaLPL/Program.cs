@@ -1,3 +1,5 @@
+using AcademiaLPL.Infra;
+
 namespace AcademiaLPL
 {
     internal static class Program
@@ -8,6 +10,7 @@ namespace AcademiaLPL
         [STAThread]
         static void Main()
         {
+            ConfigureDI.ConfigureServices();
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

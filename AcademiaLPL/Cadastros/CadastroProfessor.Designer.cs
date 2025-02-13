@@ -34,24 +34,24 @@
             textEmail = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textEspecialidade = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             textAtivo = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            tabControlBase.SuspendLayout();
-            tabPage1.SuspendLayout();
+            //tabControlBase.SuspendLayout();
+            tabPageCadastro.SuspendLayout();
             SuspendLayout();
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(textAtivo);
-            tabPage1.Controls.Add(textEspecialidade);
-            tabPage1.Controls.Add(textEmail);
-            tabPage1.Controls.Add(txtTelefone);
-            tabPage1.Controls.Add(textNome);
-            tabPage1.Controls.Add(textId);
-            tabPage1.Controls.SetChildIndex(textId, 0);
-            tabPage1.Controls.SetChildIndex(textNome, 0);
-            tabPage1.Controls.SetChildIndex(txtTelefone, 0);
-            tabPage1.Controls.SetChildIndex(textEmail, 0);
-            tabPage1.Controls.SetChildIndex(textEspecialidade, 0);
-            tabPage1.Controls.SetChildIndex(textAtivo, 0);
+            tabPageCadastro.Controls.Add(textAtivo);
+            tabPageCadastro.Controls.Add(textEspecialidade);
+            tabPageCadastro.Controls.Add(textEmail);
+            tabPageCadastro.Controls.Add(txtTelefone);
+            tabPageCadastro.Controls.Add(textNome);
+            tabPageCadastro.Controls.Add(textId);
+            tabPageCadastro.Controls.SetChildIndex(textId, 0);
+            tabPageCadastro.Controls.SetChildIndex(textNome, 0);
+            tabPageCadastro.Controls.SetChildIndex(txtTelefone, 0);
+            tabPageCadastro.Controls.SetChildIndex(textEmail, 0);
+            tabPageCadastro.Controls.SetChildIndex(textEspecialidade, 0);
+            tabPageCadastro.Controls.SetChildIndex(textAtivo, 0);
             // 
             // textId
             // 
@@ -247,9 +247,9 @@
             Location = new Point(0, 0);
             Name = "CadastroProfessor";
             Text = "CadastroProfessor";
-            tabControlBase.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            //tabControlBase.ResumeLayout(false);
+            tabPageCadastro.ResumeLayout(false);
+            tabPageCadastro.PerformLayout();
             ResumeLayout(false);
         }
 

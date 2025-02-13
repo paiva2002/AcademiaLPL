@@ -40,9 +40,9 @@
             // menuStrip1
             // 
             menuStrip1.Items.AddRange(new ToolStripItem[] { cadastrosToolStripMenuItem });
-            menuStrip1.Location = new Point(3, 64);
+            menuStrip1.Location = new Point(3, 48);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(641, 24);
+            menuStrip1.Size = new Size(694, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -121,14 +121,17 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.karateMuayThai1;
+            BackColor = SystemColors.Control;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(647, 300);
+            ClientSize = new Size(700, 389);
             Controls.Add(menuStrip1);
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             Name = "FormPrincipal";
+            Padding = new Padding(3, 48, 3, 2);
             Text = "Sistema AcademiaLPL";
+            WindowState = FormWindowState.Maximized;
             FormClosing += FormPrincipal_FormClosing;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
