@@ -8,7 +8,7 @@ namespace AcademiaLPL.Repository.Mapping
     {
         public void Configure(EntityTypeBuilder<Modalidade> builder)
         {
-            builder.ToTable("Modalide");
+            builder.ToTable("Modalidade");
 
             builder.HasKey(prop => prop.Id);
 
