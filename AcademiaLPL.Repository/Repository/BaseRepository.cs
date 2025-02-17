@@ -1,12 +1,11 @@
 ﻿using AcademiaLPL.Domain.Base;
 using AcademiaLPL.Repository.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AcademiaLPL.Repository.Repository
 {
-    public class BaseRepository<TEntity>
-        : IBaseRepository<TEntity> where TEntity
-        : BaseEntity<int>
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity<int>
     {
         protected readonly MySqlContext _mySqlcontext;
 
@@ -20,7 +19,6 @@ namespace AcademiaLPL.Repository.Repository
             _mySqlcontext.Attach(obj);
         }
 
-
         public void ClearChangeTracker()
         {
             _mySqlcontext.ChangeTracker.Clear();
@@ -28,14 +26,12 @@ namespace AcademiaLPL.Repository.Repository
 
         public void Insert(TEntity entity)
         {
-            //_mySqlcontext.ChangeTracker.Clear();
             _mySqlcontext.Set<TEntity>().Add(entity);
             _mySqlcontext.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
-            //_mySqlcontext.ChangeTracker.Clear();
             _mySqlcontext.Entry(entity).State = EntityState.Modified;
             _mySqlcontext.SaveChanges();
         }
@@ -46,6 +42,7 @@ namespace AcademiaLPL.Repository.Repository
             _mySqlcontext.SaveChanges();
         }
 
+        // Método Select ajustado para aceitar IList<string>
         public IList<TEntity> Select(bool tracking = true, IList<string>? includes = null)
         {
             IQueryable<TEntity> dbContext;
@@ -57,16 +54,20 @@ namespace AcademiaLPL.Repository.Repository
             {
                 dbContext = _mySqlcontext.Set<TEntity>().AsNoTracking().AsQueryable();
             }
+
             if (includes != null)
             {
                 foreach (var include in includes)
                 {
+                    // Inclui as propriedades de navegação usando Include
                     dbContext = dbContext.Include(include);
                 }
             }
+
             return dbContext.ToList();
         }
 
+        // Método Select por id ajustado para aceitar IList<string>
         public TEntity Select(object id, bool tracking = true, IList<string>? includes = null)
         {
             IQueryable<TEntity> dbContext;
@@ -86,7 +87,10 @@ namespace AcademiaLPL.Repository.Repository
                     dbContext = dbContext.Include(include);
                 }
             }
-            return dbContext.ToList().Find(x => x.Id == (int)id);
+
+            return dbContext.FirstOrDefault(x => x.Id == (int)id);
         }
     }
 }
+
+

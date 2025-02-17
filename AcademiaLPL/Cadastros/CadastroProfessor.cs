@@ -1,7 +1,6 @@
 ﻿using AcademiaLPL.Base;
 using AcademiaLPL.Domain.Base;
 using AcademiaLPL.Domain.Entities;
-using AcademiaLPL.Models;
 using AcademiaLPL.Service.Validators;
 
 
@@ -10,9 +9,7 @@ namespace AcademiaLPL.Cadastros
     public partial class CadastroProfessor : CadastroBase
     {
         private readonly IBaseService<Professor> _professorService;
-       
-
-        private List<ProfessorModel>? professors;
+        private List<Professor>? professors;
 
         public CadastroProfessor(IBaseService<Professor> professorService)
         {
@@ -20,12 +17,15 @@ namespace AcademiaLPL.Cadastros
             InitializeComponent();
         }
 
-        private void PreencheObjeto(Professor professor)
+        private Professor CriarProfessor()
         {
-            professor.Nome = textNome.Text;
-            professor.Telefone = txtTelefone.Text;
-            professor.Especialidade = textEspecialidade.Text;
-            professor.Email = textEmail.Text;
+            return new Professor
+            {
+                Nome = textNome.Text,
+                Telefone = txtTelefone.Text,
+                Especialidade = textEspecialidade.Text,
+                Email = textEmail.Text
+            };
         }
 
         protected override void Salvar()
@@ -37,23 +37,32 @@ namespace AcademiaLPL.Cadastros
                     if (int.TryParse(textId.Text, out var id))
                     {
                         var professor = _professorService.GetById<Professor>(id);
-                        PreencheObjeto(professor);
-                        professor = _professorService.Update<Professor, Professor, ProfessorValidator>(professor);
+                        if (professor == null)
+                        {
+                            MessageBox.Show("Professor não encontrado!", @"Cadastro de Professores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        var novoProfessor = CriarProfessor();
+                        professor.Nome = novoProfessor.Nome;
+                        professor.Telefone = novoProfessor.Telefone;
+                        professor.Especialidade = novoProfessor.Especialidade;
+                        professor.Email = novoProfessor.Email;
+
+                        _professorService.Update<Professor, Professor, ProfessorValidator>(professor);
                     }
                 }
                 else
                 {
-                    var professor = new Professor();
-                    PreencheObjeto(professor);
+                    var professor = CriarProfessor();
                     _professorService.Add<Professor, Professor, ProfessorValidator>(professor);
-
                 }
 
                 tabControlCadastro.SelectedIndex = 1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"IFSP Store", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, @"Cadastro de Professores", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -61,30 +70,36 @@ namespace AcademiaLPL.Cadastros
         {
             try
             {
+                var professor = _professorService.GetById<Professor>(id);
+                if (professor == null)
+                {
+                    MessageBox.Show("Professor não encontrado!", @"Cadastro de Professores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 _professorService.Delete(id);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"IFSP Store", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, @"Cadastro de Professores", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         protected override void CarregaGrid()
         {
-            professors = _professorService.Get<ProfessorModel>(false, new[] { "Professor" }).ToList();
+            professors = _professorService.Get<Professor>().ToList();
             dataGridViewConsulta.DataSource = professors;
-            dataGridViewConsulta.Columns["IdProfessor"]!.Visible = false;
         }
 
         protected override void CarregaRegistro(DataGridViewRow? linha)
         {
-            textId.Text = linha?.Cells["Id"].Value.ToString();
-            textNome.Text = linha?.Cells["Nome"].Value.ToString();
-            txtTelefone.Text = linha?.Cells["Telefone"].Value.ToString();
-            textEspecialidade.Text = linha?.Cells["EspecialidadeProfessor"].Value.ToString();
-            textEmail.Text = linha?.Cells["Email"].Value.ToString();
+            if (linha == null) return;
+
+            textId.Text = linha.Cells["Id"].Value?.ToString();
+            textNome.Text = linha.Cells["Nome"].Value?.ToString();
+            txtTelefone.Text = linha.Cells["Telefone"].Value?.ToString();
+            textEspecialidade.Text = linha.Cells["Especialidade"].Value?.ToString(); // Corrigido
+            textEmail.Text = linha.Cells["Email"].Value?.ToString();
         }
-
     }
-
 }

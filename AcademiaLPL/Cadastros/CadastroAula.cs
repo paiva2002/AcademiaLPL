@@ -13,9 +13,9 @@ namespace AcademiaLPL.Cadastros
         private readonly IBaseService<Professor> _professorService;
         private readonly IBaseService<Modalidade> _modalidadeService;
 
-        private List<AulaModel>? aulas;
-        private List<ProfessorModel>? professors;
-        private List<ModalidadeModel>? modalidades;
+        private List<Aula>? aulas;
+        private List<Professor>? professors;
+        private List<Modalidade>? modalidades;
 
         public CadastroAula(IBaseService<Aula> aulaService, IBaseService<Professor> professorService, IBaseService<Modalidade> modalidadeService)
         {
@@ -30,8 +30,8 @@ namespace AcademiaLPL.Cadastros
         {
             cboIdModalidade.ValueMember = "Id";
             cboIdProfessor.DisplayMember = "Id";
-            cboIdModalidade.DataSource = _modalidadeService.Get<ModalidadeModel>().ToList();
-            cboIdProfessor.DataSource = _professorService.Get<ProfessorModel>().ToList();
+            cboIdModalidade.DataSource = _modalidadeService.Get<Modalidade>().ToList();
+            cboIdProfessor.DataSource = _professorService.Get<Professor>().ToList();
         }
 
         private void PreencheObjeto(Aula aula)
@@ -48,7 +48,7 @@ namespace AcademiaLPL.Cadastros
             }
 
             aula.DiaSemana = textDiaAula.Text;
-           
+
             if (DateTime.TryParse(textHoraInicio.Text, out var horaInicio))
             {
                 aula.HorarioInicio = horaInicio;
@@ -58,7 +58,7 @@ namespace AcademiaLPL.Cadastros
             {
                 aula.HorarioFim = horaFim;
             }
-           
+
         }
 
         protected override void Salvar()
@@ -104,9 +104,8 @@ namespace AcademiaLPL.Cadastros
 
         protected override void CarregaGrid()
         {
-            aulas = _aulaService.Get<AulaModel>(false, new[] { "Aula" }).ToList();
+            aulas = _aulaService.Get<Aula>().ToList();
             dataGridViewConsulta.DataSource = aulas;
-            dataGridViewConsulta.Columns["IdAula"]!.Visible = false;
         }
 
         protected override void CarregaRegistro(DataGridViewRow? linha)

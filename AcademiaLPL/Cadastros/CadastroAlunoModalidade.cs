@@ -4,14 +4,12 @@ using AcademiaLPL.Domain.Entities;
 using AcademiaLPL.Models;
 using AcademiaLPL.Service.Validators;
 
-
 namespace AcademiaLPL.Cadastros
 {
     public partial class CadastroAlunoModalidade : CadastroBase
     {
         private readonly IBaseService<AlunoModalidade> _alunoModalidadeService;
         private readonly IBaseService<Aluno> _alunoService;
-
         private List<AlunoModalidadeModel>? alunoModalidades;
         private List<AlunoModel>? alunos;
 
@@ -26,28 +24,34 @@ namespace AcademiaLPL.Cadastros
         private void CarregarCombo()
         {
             cboIdAluno.ValueMember = "Id";
-            cboIdModalidade.DisplayMember = "IdModalidade";
+            cboIdAluno.DisplayMember = "Nome"; // Exibe o nome do aluno
             cboIdAluno.DataSource = _alunoService.Get<AlunoModel>().ToList();
+
+            cboIdModalidade.ValueMember = "Id";
+            cboIdModalidade.DisplayMember = "NomeModalidade"; // Exibe o nome da modalidade
             cboIdModalidade.DataSource = _alunoModalidadeService.Get<AlunoModalidadeModel>().ToList();
         }
 
-        private void PreencheObjeto(AlunoModalidade alunoModalidade)
+        private AlunoModalidade CriarAlunoModalidade()
         {
-            if (int.TryParse(cboIdAluno.SelectedValue.ToString(), out int idAluno))
+            var alunoModalidade = new AlunoModalidade();
+
+            if (cboIdAluno.SelectedValue is int idAluno)
             {
-                var aluno = _alunoService.GetById<Aluno>(idAluno);
-                alunoModalidade.Aluno = aluno;
+                alunoModalidade.IdAluno = idAluno;
             }
-            if (int.TryParse(cboIdModalidade.SelectedValue.ToString(), out int idModalidade))
+
+            if (cboIdModalidade.SelectedValue is int idModalidade)
             {
-                var modalidade = _alunoService.GetById<AlunoModalidade>(idModalidade);
                 alunoModalidade.IdModalidade = idModalidade;
             }
+
             if (DateTime.TryParse(textDataInicio.Text, out var dataInicio))
             {
                 alunoModalidade.DataInicio = dataInicio;
             }
-           
+
+            return alunoModalidade;
         }
 
         protected override void Salvar()
@@ -59,23 +63,33 @@ namespace AcademiaLPL.Cadastros
                     if (int.TryParse(cboIdAluno.Text, out var id))
                     {
                         var alunoModalidade = _alunoModalidadeService.GetById<AlunoModalidade>(id);
-                        PreencheObjeto(alunoModalidade);
-                        alunoModalidade = _alunoModalidadeService.Update<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidade);
+                        if (alunoModalidade == null)
+                        {
+                            MessageBox.Show("Aluno Modalidade não encontrado!",
+                                            "Cadastro",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        var novaAlunoModalidade = CriarAlunoModalidade();
+                        alunoModalidade.IdAluno = novaAlunoModalidade.IdAluno;
+                        alunoModalidade.IdModalidade = novaAlunoModalidade.IdModalidade;
+                        alunoModalidade.DataInicio = novaAlunoModalidade.DataInicio;
+
+                        _alunoModalidadeService.Update<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidade);
                     }
                 }
                 else
                 {
-                    var alunoModalidade = new AlunoModalidade();
-                    PreencheObjeto(alunoModalidade);
+                    var alunoModalidade = CriarAlunoModalidade();
                     _alunoModalidadeService.Add<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidade);
-
                 }
 
                 tabControlCadastro.SelectedIndex = 1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"IFSP Store", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -83,30 +97,42 @@ namespace AcademiaLPL.Cadastros
         {
             try
             {
+                var alunoModalidade = _alunoModalidadeService.GetById<AlunoModalidade>(id);
+                if (alunoModalidade == null)
+                {
+                    MessageBox.Show("Aluno Modalidade não encontrado!",
+                                    "Cadastro",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 _alunoModalidadeService.Delete(id);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, @"IFSP Store", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         protected override void CarregaGrid()
         {
-            alunoModalidades = _alunoModalidadeService.Get<AlunoModalidadeModel>(false, new[] { "Aluno Modalidade" }).ToList();
+            alunoModalidades = _alunoModalidadeService.Get<AlunoModalidadeModel>(false, new[] { "Aluno", "Modalidade" }).ToList();
             dataGridViewConsulta.DataSource = alunoModalidades;
-            dataGridViewConsulta.Columns["IdModalidade"]!.Visible = false;
+
+            if (dataGridViewConsulta.Columns.Contains("IdModalidade"))
+                dataGridViewConsulta.Columns["IdModalidade"].Visible = false;
         }
 
         protected override void CarregaRegistro(DataGridViewRow? linha)
         {
-            cboIdAluno.SelectedValue = linha?.Cells["IdAluno"].Value;
-            cboIdModalidade.SelectedValue = linha?.Cells["IdModalidade"].Value;
-            textDataInicio.Text = DateTime.TryParse(linha?.Cells["DataInicio"].Value.ToString(), out var dataC)
-               ? dataC.ToString("g")
-               : "";
+            if (linha == null) return;
 
+            cboIdAluno.SelectedValue = linha.Cells["IdAluno"]?.Value;
+            cboIdModalidade.SelectedValue = linha.Cells["IdModalidade"]?.Value;
+
+            textDataInicio.Text = DateTime.TryParse(linha.Cells["DataInicio"]?.Value?.ToString(), out var dataInicio)
+                ? dataInicio.ToString("dd/MM/yyyy")
+                : "";
         }
-
     }
 }
