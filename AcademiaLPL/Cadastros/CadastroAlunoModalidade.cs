@@ -10,26 +10,49 @@ namespace AcademiaLPL.Cadastros
     {
         private readonly IBaseService<AlunoModalidade> _alunoModalidadeService;
         private readonly IBaseService<Aluno> _alunoService;
+        private readonly IBaseService<Modalidade> _modalidadeService;
         private List<AlunoModalidadeModel>? alunoModalidades;
         private List<AlunoModel>? alunos;
+        private List<Modalidade>? modalidades;
 
-        public CadastroAlunoModalidade(IBaseService<AlunoModalidade> alunoModalidadeService, IBaseService<Aluno> alunoService)
+        public CadastroAlunoModalidade(
+            IBaseService<AlunoModalidade> alunoModalidadeService,
+            IBaseService<Aluno> alunoService,
+            IBaseService<Modalidade> modalidadeService) // Adicionado o serviço de Modalidade
         {
             _alunoModalidadeService = alunoModalidadeService;
             _alunoService = alunoService;
+            _modalidadeService = modalidadeService; // Inicializa o serviço de modalidades
             InitializeComponent();
             CarregarCombo();
         }
 
         private void CarregarCombo()
         {
-            cboIdAluno.ValueMember = "Id";
-            cboIdAluno.DisplayMember = "Nome"; // Exibe o nome do aluno
-            cboIdAluno.DataSource = _alunoService.Get<AlunoModel>().ToList();
+            try
+            {
+                // Carregar alunos
+                cboIdAluno.ValueMember = "Id";
+                cboIdAluno.DisplayMember = "Nome";
+                cboIdAluno.DataSource = _alunoService.Get<AlunoModel>().ToList();
 
-            cboIdModalidade.ValueMember = "Id";
-            cboIdModalidade.DisplayMember = "NomeModalidade"; // Exibe o nome da modalidade
-            cboIdModalidade.DataSource = _alunoModalidadeService.Get<AlunoModalidadeModel>().ToList();
+                // Carregar modalidades corretamente
+                modalidades = _modalidadeService.Get<Modalidade>().ToList();
+
+                if (modalidades.Count == 0)
+                {
+                    MessageBox.Show("Nenhuma modalidade cadastrada!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                cboIdModalidade.ValueMember = "Id";
+                cboIdModalidade.DisplayMember = "Nome"; // Corrigido para acessar o nome correto
+                cboIdModalidade.DataSource = modalidades;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar os dados: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private AlunoModalidade CriarAlunoModalidade()
@@ -40,15 +63,30 @@ namespace AcademiaLPL.Cadastros
             {
                 alunoModalidade.IdAluno = idAluno;
             }
+            else
+            {
+                MessageBox.Show("Selecione um aluno válido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
 
             if (cboIdModalidade.SelectedValue is int idModalidade)
             {
                 alunoModalidade.IdModalidade = idModalidade;
             }
+            else
+            {
+                MessageBox.Show("Selecione uma modalidade válida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
 
             if (DateTime.TryParse(textDataInicio.Text, out var dataInicio))
             {
                 alunoModalidade.DataInicio = dataInicio;
+            }
+            else
+            {
+                MessageBox.Show("Data de início inválida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
             }
 
             return alunoModalidade;
@@ -58,38 +96,38 @@ namespace AcademiaLPL.Cadastros
         {
             try
             {
+                var alunoModalidade = CriarAlunoModalidade();
+                if (alunoModalidade == null) return;
+
                 if (IsAlteracao)
                 {
                     if (int.TryParse(cboIdAluno.Text, out var id))
                     {
-                        var alunoModalidade = _alunoModalidadeService.GetById<AlunoModalidade>(id);
-                        if (alunoModalidade == null)
+                        var alunoModalidadeExistente = _alunoModalidadeService.GetById<AlunoModalidade>(id);
+                        if (alunoModalidadeExistente == null)
                         {
-                            MessageBox.Show("Aluno Modalidade não encontrado!",
-                                            "Cadastro",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Aluno Modalidade não encontrado!", "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
 
-                        var novaAlunoModalidade = CriarAlunoModalidade();
-                        alunoModalidade.IdAluno = novaAlunoModalidade.IdAluno;
-                        alunoModalidade.IdModalidade = novaAlunoModalidade.IdModalidade;
-                        alunoModalidade.DataInicio = novaAlunoModalidade.DataInicio;
+                        alunoModalidadeExistente.IdAluno = alunoModalidade.IdAluno;
+                        alunoModalidadeExistente.IdModalidade = alunoModalidade.IdModalidade;
+                        alunoModalidadeExistente.DataInicio = alunoModalidade.DataInicio;
 
-                        _alunoModalidadeService.Update<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidade);
+                        _alunoModalidadeService.Update<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidadeExistente);
                     }
                 }
                 else
                 {
-                    var alunoModalidade = CriarAlunoModalidade();
                     _alunoModalidadeService.Add<AlunoModalidade, AlunoModalidade, AlunoModalidadeValidator>(alunoModalidade);
                 }
 
+                MessageBox.Show("Cadastro salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tabControlCadastro.SelectedIndex = 1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Erro no Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,27 +138,33 @@ namespace AcademiaLPL.Cadastros
                 var alunoModalidade = _alunoModalidadeService.GetById<AlunoModalidade>(id);
                 if (alunoModalidade == null)
                 {
-                    MessageBox.Show("Aluno Modalidade não encontrado!",
-                                    "Cadastro",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Aluno Modalidade não encontrado!", "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 _alunoModalidadeService.Delete(id);
+                MessageBox.Show("Cadastro excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Erro no Cadastro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         protected override void CarregaGrid()
         {
-            alunoModalidades = _alunoModalidadeService.Get<AlunoModalidadeModel>(false, new[] { "Aluno", "Modalidade" }).ToList();
-            dataGridViewConsulta.DataSource = alunoModalidades;
+            try
+            {
+                alunoModalidades = _alunoModalidadeService.Get<AlunoModalidadeModel>(false, new[] { "Aluno", "Modalidade" }).ToList();
+                dataGridViewConsulta.DataSource = alunoModalidades;
 
-            if (dataGridViewConsulta.Columns.Contains("IdModalidade"))
-                dataGridViewConsulta.Columns["IdModalidade"].Visible = false;
+                if (dataGridViewConsulta.Columns.Contains("IdModalidade"))
+                    dataGridViewConsulta.Columns["IdModalidade"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar grid: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         protected override void CarregaRegistro(DataGridViewRow? linha)

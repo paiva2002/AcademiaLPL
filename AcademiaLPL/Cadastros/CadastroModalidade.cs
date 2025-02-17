@@ -1,7 +1,6 @@
 ﻿using AcademiaLPL.Base;
 using AcademiaLPL.Domain.Base;
 using AcademiaLPL.Domain.Entities;
-using AcademiaLPL.Models;
 using AcademiaLPL.Service.Validators;
 
 
@@ -10,7 +9,7 @@ namespace AcademiaLPL.Cadastros
     public partial class CadastroModalidade : CadastroBase
     {
         private readonly IBaseService<Modalidade> _modalidadeService;
-        private List<ModalidadeModel>? modalidades;
+        private List<Modalidade>? modalidades;
 
         public CadastroModalidade(IBaseService<Modalidade> modalidadeService)
         {
@@ -18,13 +17,10 @@ namespace AcademiaLPL.Cadastros
             InitializeComponent();
         }
 
-        private Modalidade CriarModalidade()
+        private void PreencheObjeto(Modalidade modalidade)
         {
-            var modalidade = new Modalidade
-            {
-                Nome = textNome.Text,
-                Descricao = textDescricao.Text
-            };
+            modalidade.Nome = textNome.Text;
+            modalidade.Descricao = textDescricao.Text;
 
             if (double.TryParse(textPreco.Text, out double precoMensal))
             {
@@ -35,38 +31,28 @@ namespace AcademiaLPL.Cadastros
                 MessageBox.Show("O valor do preço mensal é inválido. Digite um número válido.",
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            return modalidade;
         }
 
         protected override void Salvar()
         {
             try
             {
-                if (IsAlteracao)
+                if (IsAlteracao && int.TryParse(textId.Text, out var id))
                 {
-                    if (int.TryParse(textId.Text, out var id))
+                    var modalidade = _modalidadeService.GetById<Modalidade>(id);
+                    if (modalidade == null)
                     {
-                        var modalidade = _modalidadeService.GetById<Modalidade>(id);
-                        if (modalidade == null)
-                        {
-                            MessageBox.Show("Modalidade não encontrada!",
-                                            "Cadastro de Modalidades",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-
-                        var novaModalidade = CriarModalidade();
-                        modalidade.Nome = novaModalidade.Nome;
-                        modalidade.Descricao = novaModalidade.Descricao;
-                        modalidade.Precomensal = novaModalidade.Precomensal;
-
-                        _modalidadeService.Update<Modalidade, Modalidade, ModalidadeValidator>(modalidade);
+                        MessageBox.Show("Modalidade não encontrada!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
+
+                    PreencheObjeto(modalidade);
+                    _modalidadeService.Update<Modalidade, Modalidade, ModalidadeValidator>(modalidade);
                 }
                 else
                 {
-                    var modalidade = CriarModalidade();
+                    var modalidade = new Modalidade();
+                    PreencheObjeto(modalidade);
                     _modalidadeService.Add<Modalidade, Modalidade, ModalidadeValidator>(modalidade);
                 }
 
@@ -74,7 +60,7 @@ namespace AcademiaLPL.Cadastros
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Cadastro de Modalidades", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -85,9 +71,7 @@ namespace AcademiaLPL.Cadastros
                 var modalidade = _modalidadeService.GetById<Modalidade>(id);
                 if (modalidade == null)
                 {
-                    MessageBox.Show("Modalidade não encontrada!",
-                                    "Cadastro de Modalidades",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Modalidade não encontrada!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -95,17 +79,14 @@ namespace AcademiaLPL.Cadastros
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Cadastro de Modalidades", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         protected override void CarregaGrid()
         {
-            modalidades = _modalidadeService.Get<ModalidadeModel>(false, new[] { "Modalidade" }).ToList();
+            modalidades = _modalidadeService.Get<Modalidade>().ToList();
             dataGridViewConsulta.DataSource = modalidades;
-
-            if (dataGridViewConsulta.Columns.Contains("IdModalidade"))
-                dataGridViewConsulta.Columns["IdModalidade"].Visible = false;
         }
 
         protected override void CarregaRegistro(DataGridViewRow? linha)
@@ -113,8 +94,8 @@ namespace AcademiaLPL.Cadastros
             if (linha == null) return;
 
             textId.Text = linha.Cells["Id"]?.Value?.ToString();
-            textNome.Text = linha.Cells["NomeModalidade"]?.Value?.ToString();
-            textDescricao.Text = linha.Cells["DescricaoModalidade"]?.Value?.ToString();
+            textNome.Text = linha.Cells["Nome"]?.Value?.ToString();
+            textDescricao.Text = linha.Cells["Descricao"]?.Value?.ToString();
 
             textPreco.Text = double.TryParse(linha.Cells["PrecoMensal"]?.Value?.ToString(), out double preco)
                 ? preco.ToString("F2")
