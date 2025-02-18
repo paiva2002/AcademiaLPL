@@ -62,6 +62,7 @@ namespace AcademiaLPL.Base
             tabControlCadastro.Controls.Add(tabPageCadastro);
             tabControlCadastro.Controls.Add(tabPageConsulta);
             tabControlCadastro.Depth = 0;
+            tabControlCadastro.ImageList = imageList1;
             tabControlCadastro.Location = new Point(6, 67);
             tabControlCadastro.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             tabControlCadastro.Multiline = true;
@@ -75,6 +76,7 @@ namespace AcademiaLPL.Base
             // 
             tabPageCadastro.Controls.Add(btnSalvar);
             tabPageCadastro.Controls.Add(btnCancelar);
+            tabPageCadastro.ImageKey = "procurando.png";
             tabPageCadastro.Location = new Point(4, 24);
             tabPageCadastro.Name = "tabPageCadastro";
             tabPageCadastro.Padding = new Padding(3);
@@ -131,6 +133,7 @@ namespace AcademiaLPL.Base
             tabPageConsulta.Controls.Add(btnExcluir);
             tabPageConsulta.Controls.Add(btnEditar);
             tabPageConsulta.Controls.Add(btnNovo);
+            tabPageConsulta.ImageKey = "cadastro.png";
             tabPageConsulta.Location = new Point(4, 24);
             tabPageConsulta.Name = "tabPageConsulta";
             tabPageConsulta.Padding = new Padding(3);

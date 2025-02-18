@@ -63,6 +63,26 @@ namespace AcademiaLPL.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cadastro {
+            get {
+                object obj = ResourceManager.GetObject("cadastro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cara {
+            get {
+                object obj = ResourceManager.GetObject("cara", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap karateMuayThai {
             get {
                 object obj = ResourceManager.GetObject("karateMuayThai", resourceCulture);
@@ -76,6 +96,56 @@ namespace AcademiaLPL.Properties {
         internal static System.Drawing.Bitmap karateMuayThai1 {
             get {
                 object obj = ResourceManager.GetObject("karateMuayThai1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap luta {
+            get {
+                object obj = ResourceManager.GetObject("luta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap luta_livre {
+            get {
+                object obj = ResourceManager.GetObject("luta-livre", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lutar {
+            get {
+                object obj = ResourceManager.GetObject("lutar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap luvas_de_boxe__1_ {
+            get {
+                object obj = ResourceManager.GetObject("luvas-de-boxe (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap procurando {
+            get {
+                object obj = ResourceManager.GetObject("procurando", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

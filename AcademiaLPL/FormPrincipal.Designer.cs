@@ -49,62 +49,68 @@
             // cadastrosToolStripMenuItem
             // 
             cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { modalidadeToolStripMenuItem, toolStripSeparator1, professorToolStripMenuItem, toolStripSeparator2, alunoToolStripMenuItem, toolStripSeparator3, aulaToolStripMenuItem, toolStripSeparator4, alunoModalidadeToolStripMenuItem });
+            cadastrosToolStripMenuItem.Image = Properties.Resources.cadastro;
             cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
-            cadastrosToolStripMenuItem.Size = new Size(71, 20);
+            cadastrosToolStripMenuItem.Size = new Size(87, 20);
             cadastrosToolStripMenuItem.Text = "Cadastros";
             // 
             // modalidadeToolStripMenuItem
             // 
+            modalidadeToolStripMenuItem.Image = Properties.Resources.luta;
             modalidadeToolStripMenuItem.Name = "modalidadeToolStripMenuItem";
-            modalidadeToolStripMenuItem.Size = new Size(172, 22);
+            modalidadeToolStripMenuItem.Size = new Size(180, 22);
             modalidadeToolStripMenuItem.Text = "Modalidade";
             modalidadeToolStripMenuItem.Click += modalidadeToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(169, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // professorToolStripMenuItem
             // 
+            professorToolStripMenuItem.Image = Properties.Resources.cara;
             professorToolStripMenuItem.Name = "professorToolStripMenuItem";
-            professorToolStripMenuItem.Size = new Size(172, 22);
+            professorToolStripMenuItem.Size = new Size(180, 22);
             professorToolStripMenuItem.Text = "Professor";
             professorToolStripMenuItem.Click += professorToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(169, 6);
+            toolStripSeparator2.Size = new Size(177, 6);
             // 
             // alunoToolStripMenuItem
             // 
+            alunoToolStripMenuItem.Image = Properties.Resources.lutar;
             alunoToolStripMenuItem.Name = "alunoToolStripMenuItem";
-            alunoToolStripMenuItem.Size = new Size(172, 22);
+            alunoToolStripMenuItem.Size = new Size(180, 22);
             alunoToolStripMenuItem.Text = "Aluno";
             alunoToolStripMenuItem.Click += alunoToolStripMenuItem_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(169, 6);
+            toolStripSeparator3.Size = new Size(177, 6);
             // 
             // aulaToolStripMenuItem
             // 
+            aulaToolStripMenuItem.Image = Properties.Resources.luvas_de_boxe__1_;
             aulaToolStripMenuItem.Name = "aulaToolStripMenuItem";
-            aulaToolStripMenuItem.Size = new Size(172, 22);
+            aulaToolStripMenuItem.Size = new Size(180, 22);
             aulaToolStripMenuItem.Text = "Aula";
             aulaToolStripMenuItem.Click += aulaToolStripMenuItem_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(169, 6);
+            toolStripSeparator4.Size = new Size(177, 6);
             // 
             // alunoModalidadeToolStripMenuItem
             // 
+            alunoModalidadeToolStripMenuItem.Image = Properties.Resources.luta_livre;
             alunoModalidadeToolStripMenuItem.Name = "alunoModalidadeToolStripMenuItem";
-            alunoModalidadeToolStripMenuItem.Size = new Size(172, 22);
+            alunoModalidadeToolStripMenuItem.Size = new Size(180, 22);
             alunoModalidadeToolStripMenuItem.Text = "Aluno Modalidade";
             alunoModalidadeToolStripMenuItem.Click += alunoModalidadeToolStripMenuItem_Click;
             // 
@@ -116,6 +122,11 @@
             imageList1.Images.SetKeyName(0, "cadastro.png");
             imageList1.Images.SetKeyName(1, "luvas-de-boxe.png");
             imageList1.Images.SetKeyName(2, "procurando.png");
+            imageList1.Images.SetKeyName(3, "luta-livre.png");
+            imageList1.Images.SetKeyName(4, "lutar.png");
+            imageList1.Images.SetKeyName(5, "luta.png");
+            imageList1.Images.SetKeyName(6, "cara.png");
+            imageList1.Images.SetKeyName(7, "luvas-de-boxe (1).png");
             // 
             // FormPrincipal
             // 

@@ -3,7 +3,6 @@ using AcademiaLPL.Domain.Base;
 using AcademiaLPL.Domain.Entities;
 using AcademiaLPL.Service.Validators;
 
-
 namespace AcademiaLPL.Cadastros
 {
     public partial class CadastroProfessor : CadastroBase
@@ -56,8 +55,19 @@ namespace AcademiaLPL.Cadastros
                 {
                     var professor = CriarProfessor();
                     _professorService.Add<Professor, Professor, ProfessorValidator>(professor);
+
+                    var professorCadastrado = _professorService
+                        .Get<Professor>()
+                        .OrderByDescending(p => p.Id) 
+                        .FirstOrDefault(p => p.Email == professor.Email && p.Nome == professor.Nome);
+
+                    if (professorCadastrado != null)
+                    {
+                        professor.Id = professorCadastrado.Id;
+                    }
                 }
 
+                CarregaGrid(); 
                 tabControlCadastro.SelectedIndex = 1;
             }
             catch (Exception ex)
@@ -78,6 +88,7 @@ namespace AcademiaLPL.Cadastros
                 }
 
                 _professorService.Delete(id);
+                CarregaGrid(); 
             }
             catch (Exception ex)
             {
@@ -88,6 +99,12 @@ namespace AcademiaLPL.Cadastros
         protected override void CarregaGrid()
         {
             professors = _professorService.Get<Professor>().ToList();
+
+            foreach (var professor in professors)
+            {
+                Console.WriteLine($"Professor: {professor.Nome}, ID: {professor.Id}");
+            }
+
             dataGridViewConsulta.DataSource = professors;
         }
 
@@ -98,7 +115,7 @@ namespace AcademiaLPL.Cadastros
             textId.Text = linha.Cells["Id"].Value?.ToString();
             textNome.Text = linha.Cells["Nome"].Value?.ToString();
             txtTelefone.Text = linha.Cells["Telefone"].Value?.ToString();
-            textEspecialidade.Text = linha.Cells["Especialidade"].Value?.ToString(); // Corrigido
+            textEspecialidade.Text = linha.Cells["Especialidade"].Value?.ToString();
             textEmail.Text = linha.Cells["Email"].Value?.ToString();
         }
     }
